@@ -12,8 +12,14 @@
     "dotenv": "^16.5.0",
     "ejs": "^3.1.10",
     "express": "^5.1.0",
+<<<<<<< HEAD
     "method-override": "^3.0.0",
     "mongoose": "^8.14.1",
+=======
+    "mongoose": "^8.14.1"
+  },
+  "devDependencies": {
+>>>>>>> 55f690f65aafaf83df0843c33c4f70073415c42c
     "nodemon": "^3.1.10"
   }
 }
