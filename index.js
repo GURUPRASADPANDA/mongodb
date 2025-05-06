@@ -13,6 +13,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 
+
 main()
     .then(() => {
         console.log("connection successful");
@@ -20,7 +21,7 @@ main()
     .catch(err => console.log(err));
 
 async function main() {
-    await mongoose.connect('mongodb+srv://guru:guru@whatsapp.jfnuhbx.mongodb.net/?retryWrites=true&w=majority&appName=whatsapp');
+    await mongoose.connect(process.env.MONGODB_URI);
 }
 
 // Root route
