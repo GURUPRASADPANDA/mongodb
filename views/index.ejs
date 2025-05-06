@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Whatsapp Lite</title>
+    <title>WhatsApp Lite</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="/style.css">
@@ -11,35 +11,70 @@
 <body>
     <div class="chat-container">
         <div class="chat-header">
-            <h4 class="mb-0">WhatsApp Lite</h4>
+            <div class="d-flex justify-content-between align-items-center">
+                <h4 class="mb-0">WhatsApp Lite</h4>
+                <a href="/chats/new" class="btn-new-chat">
+                    <i class="fas fa-plus"></i> New Chat
+                </a>
+            </div>
         </div>
+
         <div class="search-box">
-            <input type="text" class="search-input" placeholder="Search or start new chat">
+            <div class="search-wrapper">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-input" placeholder="Search or start new chat">
+            </div>
         </div>
-        <ul class="chat-list">
+
+        <div class="chat-list-container">
             <% if (chats && chats.length > 0) { %>
                 <% chats.forEach(function(chat) { %>
-                    <li class="chat-item">
-                        <div class="chat-avatar">
-                            <i class="fas fa-user"></i>
+                    <a href="/chats/<%= chat._id %>" class="chat-item-link">
+                        <div class="chat-item">
+                            <div class="chat-avatar">
+                                <img src="https://api.dicebear.com/7.x/bottts/svg?seed=<%= chat.from %>" alt="Avatar" class="avatar-img">
+                            </div>
+                            <div class="chat-info">
+                                <div class="chat-header-info">
+                                    <div class="chat-name">
+                                        <span class="from-label">From:</span> <%= chat.from %>
+                                    </div>
+                                    <div class="chat-time">
+                                        <%= new Date(chat.created_at).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) %>
+                                    </div>
+                                </div>
+                                <div class="chat-preview">
+                                    <span class="to-label">To:</span> <%= chat.to %>
+                                </div>
+                                <div class="chat-message">
+                                    <%= chat.msg %>
+                                </div>
+                            </div>
+                            <div class="chat-actions">
+                                <a href="/chats/<%= chat._id %>/edit" class="edit-button" title="Edit message">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <form action="/chats/<%= chat._id %>?_method=DELETE" method="POST" class="delete-form">
+                                    <button type="submit" class="delete-button" title="Delete message">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
                         </div>
-                        <div class="chat-info">
-                            <div class="chat-name">From: <%= chat.from %> | To: <%= chat.to %></div>
-                            <div class="chat-preview"><%= chat.msg %></div>
-                        </div>
-                        <div class="chat-time">
-                            <%= new Date(chat.created_at).toLocaleTimeString() %>
-                        </div>
-                    </li>
+                    </a>
                 <% }); %>
             <% } else { %>
-                <li class="chat-item">
-                    <div class="chat-info text-center">
-                        <p class="text-muted">No chats available</p>
+                <div class="no-chats">
+                    <div class="no-chats-icon">
+                        <i class="fas fa-comments"></i>
                     </div>
-                </li>
+                    <p class="no-chats-text">No chats available</p>
+                    <a href="/chats/new" class="btn-start-chat">
+                        Start a New Chat
+                    </a>
+                </div>
             <% } %>
-        </ul>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
